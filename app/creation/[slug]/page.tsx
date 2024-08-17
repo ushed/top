@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import path from "path";
 import fs from "fs";
 
+export const runtime = "edge";
+
 interface CreationDetailProps {
   data: {
     id: string;
