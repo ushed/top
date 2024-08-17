@@ -23,7 +23,7 @@ export default function Home() {
         <p>
           基本月１更新になると思います
           <br />
-          <Link href="/creations">
+          <Link href="/creation">
             <span>Creations</span>
           </Link>
           では創作物、
@@ -43,7 +43,7 @@ export default function Home() {
         </h2>
         <ul>
           <li>
-            <Link href="/creations">
+            <Link href="/creation/Cdetail_1">
               <Image src="/kuma.jpg" alt="kumamoto1" width={500} height={500} />
               <p>
                 ああああああああああああああああああああああああああああああああああああああああああああああ
@@ -93,7 +93,7 @@ export default function Home() {
           Bl<span>og</span>
         </h2>
         <dl>
-          <Link href="/blog-detail_0">
+          <Link href="/blog/Bdetail_1">
             <dt>2024/01/01</dt>
             <dd>何となくやっていく</dd>
           </Link>
