@@ -34,7 +34,7 @@ export default function Burger() {
     <nav>
       <ul className={styles.nav_links}>
         <li>
-          <Link href="/creations">Creations</Link>
+          <Link href="/creation">Creations</Link>
         </li>
         <li>
           <Link href="/blog">Blog</Link>
