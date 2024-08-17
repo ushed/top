@@ -1,0 +1,4 @@
+.header h1 a {
+  transition: 0.5s;
+  font-size: 2rem;
+}
