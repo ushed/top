@@ -1,15 +1,18 @@
+// app/creation/[slug]/page.tsx
 import { notFound } from "next/navigation";
-import path from "path";
-import fs from "fs";
-
-export const runtime = "edge";
 
 interface BlogDetailProps {
-  data: {
-    id: string;
-    date: string;
-    text: string;
-  };
+  id: string;
+  date: string;
+  text: string;
+}
+
+async function fetchBlogData(slug: string): Promise<BlogDetailProps | null> {
+  const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
 }
 
 export default async function BlogDetailPage({
@@ -17,17 +20,9 @@ export default async function BlogDetailPage({
 }: {
   params: { slug: string };
 }) {
-  const filePath = path.join(
-    process.cwd(),
-    "public/BlogDetail",
-    `${params.slug}.json`
-  );
+  const data = await fetchBlogData(params.slug);
 
-  let data;
-  try {
-    const fileData = fs.readFileSync(filePath, "utf8");
-    data = JSON.parse(fileData);
-  } catch (error) {
+  if (!data) {
     notFound();
   }
 

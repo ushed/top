@@ -1,15 +1,20 @@
+// app/creation/[slug]/page.tsx
 import { notFound } from "next/navigation";
-import path from "path";
-import fs from "fs";
-
-export const runtime = "edge";
 
 interface CreationDetailProps {
-  data: {
-    id: string;
-    date: string;
-    text: string;
-  };
+  id: string;
+  date: string;
+  text: string;
+}
+
+async function fetchCreationData(
+  slug: string
+): Promise<CreationDetailProps | null> {
+  const res = await fetch(`http://localhost:3000/api/creation/${slug}`);
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
 }
 
 export default async function CreationDetailPage({
@@ -17,17 +22,9 @@ export default async function CreationDetailPage({
 }: {
   params: { slug: string };
 }) {
-  const filePath = path.join(
-    process.cwd(),
-    "public/CreationDetail",
-    `${params.slug}.json`
-  );
+  const data = await fetchCreationData(params.slug);
 
-  let data;
-  try {
-    const fileData = fs.readFileSync(filePath, "utf8");
-    data = JSON.parse(fileData);
-  } catch (error) {
+  if (!data) {
     notFound();
   }
 

@@ -43,7 +43,7 @@ export default function Home() {
         </h2>
         <ul>
           <li>
-            <Link href="/creation/Cdetail_1">
+            <Link href="/creation/1">
               <Image src="/kuma.jpg" alt="kumamoto1" width={500} height={500} />
               <p>
                 ああああああああああああああああああああああああああああああああああああああああああああああ
@@ -93,7 +93,7 @@ export default function Home() {
           Bl<span>og</span>
         </h2>
         <dl>
-          <Link href="/blog/Bdetail_1">
+          <Link href="/blog/1">
             <dt>2024/01/01</dt>
             <dd>何となくやっていく</dd>
           </Link>
