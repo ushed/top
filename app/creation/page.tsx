@@ -11,7 +11,7 @@ export default function CreationPage() {
         </h2>
         <ul>
           <li>
-            <Link href="/creation/Cdetail_1">
+            <Link href="/creation/1">
               <Image src="/kuma.jpg" alt="kumamoto1" width={500} height={500} />
               <p>Cdetail_1</p>
             </Link>

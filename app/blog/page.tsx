@@ -9,7 +9,7 @@ export default function BlogPage() {
           Bl<span>og</span>
         </h2>
         <dl>
-          <Link href="/app/blog/1">
+          <Link href="/blog/1">
             <dt>2024/01/05</dt>
             <dd>何となくやっていく</dd>
           </Link>
