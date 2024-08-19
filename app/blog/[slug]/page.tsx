@@ -1,37 +1,50 @@
-// app/creation/[slug]/page.tsx
-import { notFound } from "next/navigation";
+// app/blog/[slug]/page.tsx
+import fs from "fs";
+import path from "path";
+import { serialize } from "next-mdx-remote/serialize";
 
-interface BlogDetailProps {
-  id: string;
+type BlogType = {
+  title: string;
   date: string;
-  text: string;
-}
+  text: any;
+};
 
-async function fetchBlogData(slug: string): Promise<BlogDetailProps | null> {
-  const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
-  if (!res.ok) {
-    return null;
+const fetchBlogData = async (slug: string): Promise<BlogType> => {
+  try {
+    const mdxFilePath = path.join(
+      process.cwd(),
+      `public/BlogDetail/${slug}.mdx`
+    );
+    const mdxSource = fs.readFileSync(mdxFilePath, "utf-8");
+
+    const serializedContent = await serialize(mdxSource, {
+      parseFrontmatter: true,
+    });
+
+    const frontmatter = serializedContent.frontmatter || {};
+
+    return {
+      title: (frontmatter.title as string) || "",
+      date: (frontmatter.date as string) || "",
+      text: serializedContent,
+    };
+  } catch (error) {
+    console.error("Error fetching blog data:", error);
+    throw new Error("Failed to fetch blog data");
   }
-  return res.json();
-}
+};
 
-export default async function BlogDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const data = await fetchBlogData(params.slug);
+const BlogPage = async ({ params }: { params: { slug: string } }) => {
+  const blog = await fetchBlogData(params.slug);
 
-  if (!data) {
-    notFound();
-  }
+  // BlogContent コンポーネントのクライアントサイド動的インポート
+  const BlogContent = (await import("./BlogContent")).default;
 
   return (
-    <div>
-      <h1>Blog Detail</h1>
-      <p>ID: {data.id}</p>
-      <p>Date: {data.date}</p>
-      <p>{data.text}</p>
-    </div>
+    <main id="main">
+      <BlogContent slug={params.slug} blog={blog} />
+    </main>
   );
-}
+};
+
+export default BlogPage;

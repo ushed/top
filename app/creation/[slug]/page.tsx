@@ -1,39 +1,45 @@
 // app/creation/[slug]/page.tsx
-import { notFound } from "next/navigation";
+import fs from "fs";
+import path from "path";
+import { serialize } from "next-mdx-remote/serialize";
+import CreationContent from "./CreationContent";
 
-interface CreationDetailProps {
-  id: string;
+type CreationType = {
+  title: string;
   date: string;
-  text: string;
-}
+  text: any;
+  thumbnail: string;
+};
 
-async function fetchCreationData(
-  slug: string
-): Promise<CreationDetailProps | null> {
-  const res = await fetch(`http://localhost:3000/api/creation/${slug}`);
-  if (!res.ok) {
-    return null;
-  }
-  return res.json();
-}
+const fetchCreationData = async (slug: string): Promise<CreationType> => {
+  const mdxFilePath = path.join(
+    process.cwd(),
+    `public/CreationDetail/${slug}.mdx`
+  );
+  const mdxSource = fs.readFileSync(mdxFilePath, "utf-8");
 
-export default async function CreationDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const data = await fetchCreationData(params.slug);
+  const serializedContent = await serialize(mdxSource, {
+    parseFrontmatter: true,
+  });
 
-  if (!data) {
-    notFound();
-  }
+  const frontmatter = serializedContent.frontmatter || {};
+
+  return {
+    title: (frontmatter.title as string) || "",
+    date: (frontmatter.date as string) || "",
+    text: serializedContent,
+    thumbnail: (frontmatter.thumbnail as string) || "",
+  };
+};
+
+const CreationDetailPage = async ({ params }: { params: { slug: string } }) => {
+  const creation = await fetchCreationData(params.slug);
 
   return (
-    <div>
-      <h1>Creation Detail</h1>
-      <p>ID: {data.id}</p>
-      <p>Date: {data.date}</p>
-      <p>{data.text}</p>
-    </div>
+    <main id="main">
+      <CreationContent creation={creation} />
+    </main>
   );
-}
+};
+
+export default CreationDetailPage;

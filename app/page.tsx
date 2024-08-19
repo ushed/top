@@ -1,7 +1,13 @@
+// app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
+import { getBlogData, BlogPost } from "./blog/data";
+import { getAllCreations, CreationType } from "./creation/data";
 
-export default function Home() {
+export default async function Home() {
+  const blogPosts: BlogPost[] = await getBlogData();
+  const creations: CreationType[] = await getAllCreations();
+
   return (
     <main id="main">
       <picture>
@@ -42,43 +48,19 @@ export default function Home() {
           Crea<span>tions</span>
         </h2>
         <ul>
-          <li>
-            <Link href="/creation/1">
-              <Image src="/kuma.jpg" alt="kumamoto1" width={500} height={500} />
-              <p>
-                ああああああああああああああああああああああああああああああああああああああああああああああ
-                ああああああああああああああああああああああああああああああああああああああああああああああ
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link href="">
-              <Image src="/kuma.jpg" alt="kumamoto2" width={500} height={500} />
-            </Link>
-          </li>
-          <li>
-            <Link href="">
-              <Image src="/kuma.jpg" alt="kumamoto3" width={500} height={500} />
-            </Link>
-          </li>
-          <li className="card_hide">
-            <Link href="">
-              <Image src="/kuma.jpg" alt="kumamoto4" width={500} height={500} />
-            </Link>
-          </li>
-          <li className="card_hide">
-            <Link href="">
-              <Image src="/kuma.jpg" alt="kumamoto5" width={500} height={500} />
-              <p>
-                ああああああああああああああああああああああああああああああああああああああああああああああ
-              </p>
-            </Link>
-          </li>
-          <li className="card_hide">
-            <Link href="">
-              <Image src="/kuma.jpg" alt="kumamoto6" width={500} height={500} />
-            </Link>
-          </li>
+          {creations.map((creation) => (
+            <li key={creation.id}>
+              <Link href={`/creation/${creation.id}`}>
+                <Image
+                  src={creation.thumbnail}
+                  alt={creation.title}
+                  width={500}
+                  height={500}
+                />
+                <p>{creation.title}</p>
+              </Link>
+            </li>
+          ))}
         </ul>
         <Link href="/creation" className="btn_a">
           <div className="btn">
@@ -93,26 +75,16 @@ export default function Home() {
           Bl<span>og</span>
         </h2>
         <dl>
-          <Link href="/blog/1">
-            <dt>2024/01/01</dt>
-            <dd>何となくやっていく</dd>
-          </Link>
-          <Link href="#">
-            <dt>2024/01/02</dt>
-            <dd>こんにちは、世界2</dd>
-          </Link>
-          <Link href="#">
-            <dt>2024/01/03</dt>
-            <dd>こんにちは、世界3</dd>
-          </Link>
-          <Link href="#">
-            <dt>2024/01/04</dt>
-            <dd>こんにちは、世界4</dd>
-          </Link>
-          <Link href="#">
-            <dt>2024/01/05</dt>
-            <dd>こんにちは、世界5</dd>
-          </Link>
+          {blogPosts.length > 0 ? (
+            blogPosts.map((post) => (
+              <Link key={post.id} href={`/blog/${post.id}`}>
+                <dt>{post.date}</dt>
+                <dd>{post.title}</dd>
+              </Link>
+            ))
+          ) : (
+            <p>ブログ記事はまだありません。</p>
+          )}
         </dl>
         <Link href="/blog" className="btn_a">
           <div className="btn">
