@@ -1,24 +1,36 @@
-import Image from "next/image";
+// app/creation/page.tsx
+import { FC } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { getAllCreations, CreationType } from "./data";
 
-export default function CreationPage() {
+const CreationPage: FC = async () => {
+  const creationPosts: CreationType[] = await getAllCreations();
+
   return (
     <main id="main">
-      {/* creation */}
       <section id="creations" className="wrapper">
         <h2 className="sec-title">
           Crea<span>tion</span>
         </h2>
         <ul>
-          <li>
-            <Link href="/creation/1">
-              <Image src="/kuma.jpg" alt="kumamoto1" width={500} height={500} />
-              <p>Cdetail_1</p>
-            </Link>
-          </li>
-          {/* 他のリスト項目も同様に修正 */}
+          {creationPosts.map((post) => (
+            <li key={post.id}>
+              <Link href={`/creation/${post.id}`}>
+                <Image
+                  src={post.thumbnail}
+                  alt={post.title}
+                  width={500}
+                  height={500}
+                />
+                <p>{post.title}</p>
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
     </main>
   );
-}
+};
+
+export default CreationPage;

@@ -70,8 +70,13 @@ p {
   line-height: 1.5;
 }
 
+h2 {
+  font-size: 2.5rem !important;
+  text-align: center;
+}
 h3 {
-  font-size: 1rem;
+  font-size: 1rem !important;
+  margin: 30px 7px 20px 7px !important;
 }
 
 img {
@@ -101,18 +106,13 @@ span {
 }
 
 .sec-title {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   text-align: center;
   margin-bottom: 40px;
 }
 
 /*header*/
 #header {
-  /*header固定
-  position: fixed;
-  top: 0;
-  box-sizing: border-box;
-  */
   background: var(--dark_A-color);
   width: 100%;
   display: flex;
@@ -335,39 +335,6 @@ span {
   background-color: var(--Accent-color);
   color: var(--white-color);
 }
-/*
-#creations .btn a::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 6px;
-  transform: translateY(-50%);
-  box-sizing: border-box;
-  width: 6px;
-  height: 6px;
-  background-color: var(--Accent-color);
-  transition: background-color 0.5s;
-}
-#creations .btn a::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-left: 6px solid var(--Accent-color);
-  transition: border-left-color 0.5s;
-}
-#creations .btn:hover a::before {
-  background-color: var(--white-color);
-}
-#creations .btn:hover a::after {
-  border-left: 6px solid var(--white-color);
-}
-*/
 
 /*blog*/
 #blog dl {
@@ -430,39 +397,6 @@ span {
   background-color: var(--Accent-color);
   color: var(--white-color);
 }
-/*
-#blog .btn a::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 6px;
-  transform: translateY(-50%);
-  box-sizing: border-box;
-  width: 6px;
-  height: 6px;
-  background-color: var(--Accent-color);
-  transition: background-color 0.5s;
-}
-#blog .btn a::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-left: 6px solid var(--Accent-color);
-  transition: border-left-color 0.5s;
-}
-#blog .btn:hover a::before {
-  background-color: var(--white-color);
-}
-#blog .btn:hover a::after {
-  border-left: 6px solid var(--white-color);
-}
-*/
 
 /*contact*/
 #contact p {
@@ -513,11 +447,6 @@ span {
   background-color: var(--Accent-color);
   color: var(--white-color);
 }
-/*
-#blog .A7{
-    background-color: #E6E6FA;
-    color: #8A2BE2; 
-}*/
 
 #footer {
   text-align: center;
